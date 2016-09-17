@@ -1,0 +1,25 @@
+  <div class="center-block w-xxl w-auto-xs p-v-md">
+    <div class="navbar">
+      <div class="navbar-brand m-t-lg text-center">
+        <!--<img src="images/logo.png" alt="." style="max-height: 70px;">-->
+      </div>
+    </div>
+
+    <div class="p-lg panel md-whiteframe-z1 text-color m">
+      <div class="m-b text-sm">
+        Iniciar sesión con su cuenta {{app.name}}
+      </div>
+      <form name="form">
+        <div class="md-form-group float-label">
+          <input type="text" class="md-input" ng-model="user.usuario" required>
+          <label>Usuario</label>
+        </div>
+        <div class="md-form-group float-label">
+          <input type="password" class="md-input" ng-model="user.password" ng-enter="actionAuth(user)" required>
+          <label>Password</label>
+        </div>
+        <button md-ink-ripple type="button" class="md-btn md-raised deep-orange btn-block p-h-md"
+        ng-disabled="form.$invalid" ng-click="actionAuth(user)">Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>

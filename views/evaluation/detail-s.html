@@ -1,0 +1,98 @@
+<div class="row" ng-controller="SelfEvaluationCtrl" ng-cloak>
+  <h4>Evaluado: <strong>{{evaluated.name}}</strong></h4>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <!-- START TAB PANEL-->
+      <div class="md-whiteframe-z0 bg-white">
+        <ul class="nav nav-lines nav-tabs nav-justified">
+          <li class="active">
+            <a href data-toggle="tab" data-target="#tab1">COMPETENCIA</a>
+          </li>
+          <li>
+            <a href data-toggle="tab" data-target="#tab2">RESUMEN</a>
+          </li>
+        </ul>
+        <div class="tab-content p m-b-md clear b-t b-t-2x">
+          <div role="tabpanel" class="tab-pane animated fadeInDown active" id="tab1">
+            <div layout-gt-xs="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-2">
+                    <button class="btn btn-xs btn-sm btn-addon deep-orange-500" ng-click="prev()">Anterior</button>
+                  </div>
+                  <div class="col-md-8 text-center">
+                    <strong>{{criteriaSelected.name}}</strong>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-xs btn-sm btn-addon deep-orange-500" ng-click="next()">Siguiente</button>
+                  </div>
+                </div>             
+              </div>
+            </div>
+            <div class="row" ng-if="criteriaSelected.note">
+              <div class="alert alert-warning text-center">{{criteriaSelected.note}}</div>
+            </div>
+            <!--EVALUATION QUESTION-->
+            <div class="col-xs-12 col-md-12">
+              <table class="table">
+                <tfoot>
+                  <tr>
+                    <td colspan="2" class="text-right">PROMEDIO DE LA COMPETENCIA:</td>
+                    <td >{{average}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="text-right">PROMEDIO TOTAL:</td>
+                    <td >{{totalAverage}}</td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr ng-repeat="question in questionList | filter: {question_criteria:criteriaSelected.id}:true">
+                    <td>
+                      <div ng-class="{'md-list-item-left md-long-text circle grey-600':question.answer=='','md-list-item-left md-long-text circle green-600':question.answer!=''}">
+                        <i ng-class="{'mdi-action-label i-24': question.answer=='','mdi-action-done i-24': question.answer!=''}"></i>
+                      </div>
+                    </td>
+                    <td>{{question.question_description}}</td>
+                    <td class="text-right" style="width:20px;">
+                      {{question.answer | navalue}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--END EVALUATION QUESTION-->
+          </div>
+          <div role="tabpanel" class="tab-pane animated fadeInDown" id="tab2">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                      <th>COMPETENCIA</th>
+                      <th class="text-center" style="width:20px;">PREGUNTAS CONTESTADAS</th>
+                      <th class="text-center" style="width:20px;">PREGUNTAS SIN CONTESTAR</th>
+                      <th class="text-center" style="width:20px;">PROMEDIO</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="text-right">PROMEDIO GENERAL:</td>
+                    <td class="text-center">{{totalAverage}}</td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr ng-repeat="c in criteria">
+                      <td>{{c.name}}</td>
+                      <td class="text-center">{{questionsAnsweredPerCriteria(c.id)}}</td>
+                      <td class="text-center">{{questionsUnAnsweredPerCriteria(c.id)}}</td>
+                      <td class="text-center">{{averagePerCriteria(c.id)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END TAB PANEL-->      
+    </div>
+  </div>
+</div>

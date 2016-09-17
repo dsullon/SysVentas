@@ -1,0 +1,26 @@
+<div class="row" ng-controller="ResultCtrl">
+  <h3>Listado de personas a evaluar</h3>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2" ng-repeat="user in evaluatedList" ng-init="getProgress(user)">
+      <div class="panel panel-card">
+        <div class="item">
+          <img ng-src="images/employee/{{user.acronym | lowercase}}.jpg" class="w-full r-t" alt="{{user.acronym}}">
+          <div class="bottom text-white p">
+            <h4>{{user.name}}</h4>
+            <small>{{user.position}}</small>
+          </div>
+        </div>
+        <a ui-sref="app.evaluate({id:evaluationId, evaluated: user.id})" md-ink-ripple 
+        class="md-btn md-raised md-fab green m-r md-fab-offset pull-right"><i class="mdi-action-assignment i-24"></i></a>
+        <div class="p">
+          <br/>
+          <div class="progress">
+            <div ng-class="{'progress-bar progress-bar-success':user.progressType=='success',
+          'progress-bar progress-bar-warning':user.progressType=='warning', 'progress-bar progress-bar-danger':user.progressType=='danger'}" 
+          style="width:{{user.progress}}%">{{user.progress}}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

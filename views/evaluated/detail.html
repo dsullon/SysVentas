@@ -1,0 +1,154 @@
+<div class="row" ng-controller="EvaluationDetailCtrl" ng-cloak>
+  <div class="card-heading">
+    <h2>Resumen del evaluador: {{evaluator.name}}</h2>
+  </div>
+  <!-- START TAB PANEL-->
+  <div class="md-whiteframe-z0 bg-white">
+    <ul class="nav nav-lines nav-tabs nav-justified">
+      <li class="active">
+        <a href data-toggle="tab" data-target="#tab1">COMPETENCIA</a>
+      </li>
+      <li>
+        <a href data-toggle="tab" data-target="#tab2">COMENTARIOS</a>
+      </li>
+      <li>
+        <a href data-toggle="tab" data-target="#tab3">RESUMEN</a>
+      </li>
+    </ul>
+    <div class="tab-content p m-b-md clear b-t b-t-2x">
+      <div role="tabpanel" class="tab-pane animated fadeInDown active" id="tab1">
+        <div layout-gt-xs="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-xs btn-sm btn-addon deep-orange-500" ng-click="prev()">Anterior</button>
+              </div>
+              <div class="col-md-8 text-center">
+                <strong>{{criteriaSelected.name}}</strong>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-xs btn-sm btn-addon deep-orange-500" ng-click="next()">Siguiente</button>
+              </div>
+            </div>             
+          </div>
+          <div class="col-md-6">
+            <div flex-gt-sm>
+              <div class="progress" style="margin-left:50px;">
+                <div ng-class="{'progress-bar progress-bar-success':totalProgressType=='success',
+              'progress-bar progress-bar-warning':totalProgressType=='warning', 'progress-bar progress-bar-danger':totalProgressType=='danger'}" 
+              style="width:{{totalProgress}}%">{{totalProgress}}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-if="criteriaSelected.note">
+          <div class="alert alert-warning text-center">{{criteriaSelected.note}}</div>
+        </div>
+        <!--EVALUATION QUESTION-->
+        <div class="col-xs-12 col-md-12">
+          <table class="table">
+            <tfoot>
+              <tr>
+                <td colspan="2" class="text-right">PROMEDIO DE LA COMPETENCIA:</td>
+                <td >{{average}}</td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-right">PROMEDIO TOTAL:</td>
+                <td >{{totalAverage}}</td>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr ng-repeat="question in questionList | filter: {question_criteria:criteriaSelected.id}:true">
+                <td>
+                  <div ng-class="{'md-list-item-left md-long-text circle grey-600':question.answer=='','md-list-item-left md-long-text circle green-600':question.answer!=''}">
+                    <i ng-class="{'mdi-action-label i-24': question.answer=='','mdi-action-done i-24': question.answer!=''}"></i>
+                  </div>
+                </td>
+                <td>{{question.question_description}}</td>
+                <td class="text-right" style="width:20px;">
+                  {{question.answer | navalue}}              
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--END EVALUATION QUESTION-->
+      </div>
+      <div role="tabpanel" class="tab-pane animated fadeInDown" id="tab2">
+        <div class="panel bg-light pos-rlt">
+          <span class="arrow left b-light"></span>
+          <div class="panel-body">            
+            <strong>OBSERVACIONES DEL EVALUADOR</strong>
+          </div>
+        </div>
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="comment in evaluatorCommentList">
+              <td>
+                <p><strong>{{comment.comment_description}}</strong></p>
+                  {{comment.response}}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="panel bg-light pos-rlt">
+          <span class="arrow left b-light"></span>
+          <div class="panel-body">
+           <strong>COMENTARIOS FINALES DEL EVALUADO</strong>
+          </div>
+        </div>
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="comment in commentList">
+              <td>
+                <div ng-class="{'md-list-item-left md-long-text circle grey-600':comment.response=='','md-list-item-left md-long-text circle green-600':comment.response!=''}">
+                  <i class="mdi-editor-insert-comment i-24"></i>
+                </div>
+              </td>
+              <td>
+                <strong>{{comment.comment_description}}</strong>
+                <md-input-container class="md-block" ng-if="comment.response_type==3">
+                  <textarea ng-model="comment.response" columns="1" md-maxlength="800" rows="3" aria-label="Comentarios"></textarea>
+                </md-input-container>
+              </td>
+              <td class="text-right" style="width:20px;">
+                <select ng-if="comment.response_type==2" ng-options="type.value as type.scale for type in options" ng-model="comment.response"></select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <md-button class="md-warn md-raised deep-orange-500" ng-click="saveComment()">Grabar</md-button>
+      </div>
+      <div role="tabpanel" class="tab-pane animated fadeInDown" id="tab3">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+                  <th>COMPETENCIA</th>
+                  <th class="text-center" style="width:20px;">PREGUNTAS CONTESTADAS</th>
+                  <th class="text-center" style="width:20px;">PREGUNTAS SIN CONTESTAR</th>
+                  <th class="text-center" style="width:20px;">PROMEDIO</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="text-right">PROMEDIO GENERAL:</td>
+                <td class="text-center">{{totalAverage}}</td>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr ng-repeat="c in criteria">
+                  <td>{{c.name}}</td>
+                  <td class="text-center">{{questionsAnsweredPerCriteria(c.id)}}</td>
+                  <td class="text-center">{{questionsUnAnsweredPerCriteria(c.id)}}</td>
+                  <td class="text-center">{{averagePerCriteria(c.id)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END TAB PANEL-->
+</div>

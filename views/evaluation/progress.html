@@ -1,0 +1,39 @@
+<div class="row" ng-controller="ProgressCtrl" ng-cloak>
+  <div class="row row-xs">
+    <div class="col-sm-4 col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <span class="label bg-danger pull-right m-t-xs">{{evaluatedList.length}} Evaluados</span>
+          Listado de evaluados
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Evaluado</th>
+              <th>Promedio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in evaluatedList" ng-init="getAverage(user)" ui-sref-active="is-active">
+              <td class="list-group-item clearfix">
+                <a ui-sref="app.progress.detail({id:evaluationId, evaluated: user.id})" class="pull-left w-40 m-r">
+                  <img ng-src="images/employee/small/{{user.acronym | lowercase}}.jpg" alt="{{user.acronym}}" class="w-full img-circle">
+                </a>
+                <div class="text-ellipsis">
+                  <div><a ui-sref="app.progress.detail({id:evaluationId, evaluated: user.id})">{{user.name}}</a></div>
+                  <small class="text-muted-dk">{{user.position}}</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-success badge-lg">{{user.totalAverage}}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-8">
+      <div style="margin-left:10px;" ui-view ></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+.date-picker-row {
+    margin-left: -15px;
+    position: relative;
+    min-height: 60px;
+}
+
+.date-picker-row label {
+    position: absolute;
+    top: -10px;
+    left: 50px;
+    color: rgba(0, 0, 0, 0.541176);
+    font-size: 12px;
+}
+
+.date-picker-row .md-datepicker-input-container {
+    margin-left: 0;
+}
+
+.is-active{
+  color: orangered;
+  font-weight: bold;
+}
+
+a.action {
+    color: orangered;
+}
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.printTable>thead>tr>th, 
+.printTable>tbody>tr>th, 
+.printTable>tfoot>tr>th, 
+.printTable>thead>tr>td, 
+.printTable>tbody>tr>td, 
+.printTable>tfoot>tr>td {
+padding: 5px;
+}

@@ -1,0 +1,325 @@
+<div class="row" ng-controller="TypeListCtrl">
+    <p>
+        <label class="md-switch">
+            <input type="checkbox" ng-model="evaluationType.has_boss" ng-true-value="'1'" ng-false-value="'0'"
+            ng-change="changeStatus()">
+            <i class="deep-orange"></i>
+            ¿Agregar preguntas para jefe?
+        </label>
+    </p>
+    <!-- START TAB PANEL-->
+    <tabset class="tab-container">
+        <tab active>
+            <tab-heading>
+                <i class="fa fa-tasks"></i> PREGUNTAS DE EVALUACIÓN
+            </tab-heading>
+            <div class="animated fadeIn">
+                <div layout layout-sm="column">
+                    <md-input-container flex>
+                        <md-select aria-label="Criterios" ng-model="model.selectedCriteria">
+                            <md-option ng-repeat="opt in criterias" ng-value="opt">
+                            {{ opt.name }}
+                            </md-option>
+                        </md-select>
+                        <a ng-click="criteriaVisible(true)" ng-if="!showCriterias" class="action">
+                            <strong>Ver criterios</strong>
+                        </a>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <md-radio-group ng-model="model.questionEvalType" class="md-warn" layout="row">
+                        <md-radio-button ng-value="'0'">EVALUADORES</md-radio-button>
+                        <md-radio-button ng-value="'1'" ng-if="evaluationType.has_boss === '0'">EVALUADOS</md-radio-button>
+                        <md-radio-button ng-value="'2'" ng-if="evaluationType.has_boss === '1'">JEFE DE ÁREA</md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                </div>
+                <div ng-show="showCriterias">
+                    <a ng-click="criteriaVisible()" class="action"><strong>Ocultar criterios</strong></a>
+                    <table class="table table-striped" ng-if="showCriterias">
+                        <thead>
+                            <tr>
+                                <th>CRITERIO</th>
+                                <th><a class="action" ng-click="showNewCriteria();" tooltip-placement="top" tooltip="Crear nuevo criterio.">
+                                    <i class="fa fa-plus"></i> Nuevo
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="criteria in criterias">
+                                <td>
+                                    <p>{{criteria.name}}</p>
+                                </td>
+                                <td>
+                                    <div layout-gt-xs="row">
+                                        <a ng-click="showEditCriteria(criteria);" title="Editar" style="padding-right:10px;"><i class="fa fa-edit i-20"></i></a>
+                                        <a ng-click="deleteCriteria(criteria)" title="Eliminar" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                                    </div>                            
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>PREGUNTA</th>
+                            <th><a class="action" ng-click="showNewQuestion();" tooltip-placement="top" tooltip="Crear nueva pregunta.">
+                                <i class="fa fa-plus"></i> Nuevo
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="question in questionList | filter: {evaluation_criteria_id:model.selectedCriteria.id} | filter:{question_type:model.questionEvalType}:true">
+                            <td>
+                                <p>{{question.description}}</p>
+                            </td>
+                            <td>
+                                <div layout-gt-xs="row">
+                                    <a ng-click="showEditQuestion(question);" title="Editar" style="padding-right:10px;"><i class="fa fa-edit i-20"></i></a>
+                                    <a ng-click="deleteQuestion(question)" title="Eliminar" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                                </div>                            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <i class="fa fa-comments-o"></i> COMENTARIOS DE EVALUACIÓN
+            </tab-heading>
+            <div class="animated fadeIn">
+                <div layout layout-sm="column">
+                    <md-input-container flex>
+                        <md-radio-group ng-model="model.commentEvalType" class="md-warn" layout="row">
+                        <md-radio-button ng-value="'0'">EVALUADORES</md-radio-button>
+                        <md-radio-button ng-value="'1'" ng-if="evaluationType.has_boss === '0'">EVALUADOS</md-radio-button>
+                        <md-radio-button ng-value="'2'" ng-if="evaluationType.has_boss === '1'">JEFE DE ÁREA</md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>COMENTARIO</th>
+                            <th><a class="action" ng-click="showNewComment();" tooltip-placement="top" tooltip="Crear nuevo comentario.">
+                                <i class="fa fa-plus"></i> Nuevo
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="comment in commentList | filter:{comment_type:model.commentEvalType}:true">
+                            <td>
+                                <p>{{comment.description}}</p>
+                            </td>
+                            <td>
+                                <div layout-gt-xs="row">
+                                    <a ng-click="showEditComment(comment);" title="Editar" style="padding-right:10px;"><i class="fa fa-edit i-20"></i></a>
+                                    <a ng-click="deleteComment(comment)" title="Eliminar" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                                </div>                            
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </tab>
+    </tabset>
+    <!-- END TAB PANEL-->
+    <!--EDIT QUESTION DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="editQuestion">
+            <md-dialog aria-label="Editar pregunta">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Editar pregunta</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <table class="printTable">
+                        <tr>
+                            <td style="width:10px;"><strong>Criterio:</strong></td>
+                            <td>{{model.selectedCriteria.name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10px;"><strong>Tipo:</strong></td>
+                            <td>{{model.questionEvalType | evaltype}}</td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <textarea ng-model="questionSelected.description" class="form-control" rows="6" placeholder="Ingrese el detalle de la pregunta"></textarea>
+                    </div>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="updateQuestion()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END EDIT QUESTION DIALOG-->
+    <!--NEW QUESTION DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="newQuestion">
+            <md-dialog aria-label="Crear pregunta">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Nueva pregunta</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <table class="printTable">
+                        <tr>
+                            <td style="width:10px;"><strong>Criterio:</strong></td>
+                            <td>{{model.selectedCriteria.name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10px;"><strong>Tipo:</strong></td>
+                            <td>{{model.questionEvalType | evaltype}}</td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <textarea ng-model="newQuestion" class="form-control" rows="6" placeholder="Ingrese el detalle de la pregunta"></textarea>
+                    </div>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="saveQuestion()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END NEW QUESTION DIALOG-->
+    <!--EDIT COMMENT DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="editComment">
+            <md-dialog aria-label="Editar comentario">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Editar comentario</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <table class="printTable">
+                        <tr>
+                            <td style="width:10px;"><strong>Tipo:</strong></td>
+                            <td>{{model.commentEvalType | evaltype}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10px;"><strong>Respuesta:</strong></td>
+                            <td><select ng-options="type.id as type.name for type in responseTypeList" ng-model="commentSelected.response_type"/></td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <textarea ng-model="commentSelected.description" class="form-control" rows="6" placeholder="Ingrese el detalle del comentario"></textarea>
+                    </div>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="updateComment()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END EDIT COMMENT DIALOG-->
+    <!--NEW COMMENT DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="newComment">
+            <md-dialog aria-label="Crear comentario">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Nuevo comentario</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <table class="printTable">
+                        <tr>
+                            <td style="width:10px;"><strong>Tipo:</strong></td>
+                            <td>{{model.commentEvalType | evaltype}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10px;"><strong>Respuesta:</strong></td>
+                            <td><select ng-options="type.id as type.name for type in responseTypeList" ng-model="newComment.response"/></td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <textarea ng-model="newComment.description" class="form-control" rows="6" placeholder="Ingrese el detalle del comentario"></textarea>
+                    </div>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="saveComment()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END NEW COMMENT DIALOG-->
+    <!--EDIT CRITERIA DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="editCriteria">
+            <md-dialog aria-label="Editar criterio">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Editar criterio</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <md-input-container class="md-block">
+                        <label>Nombre</label>
+                        <input ng-model="criteriaSelected.name"/>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Nota</label>
+                        <textarea ng-model="criteriaSelected.note" columns="1" md-maxlength="150" rows="1"></textarea>
+                    </md-input-container>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="updateCriteria()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END EDIT CRITERIA DIALOG-->
+    <!--NEW CRITERIA DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="newCriteria">
+            <md-dialog aria-label="Crear criterio">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Nuevo criterio</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <md-input-container class="md-block">
+                        <label>Nombre</label>
+                        <input ng-model="newCriteria.name"/>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Nota</label>
+                        <textarea ng-model="newCriteria.note" columns="1" md-maxlength="150" rows="1"></textarea>
+                    </md-input-container>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="saveCriteria()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END NEW CRITERIA DIALOG-->
+</div>
+
+
+
+
+
+  

@@ -1,0 +1,232 @@
+<div ng-controller="ProgressDetailCtrl" ng-cloak>
+  <div class="card-heading">
+    <h2>Resumen de evaluación para: {{evaluated.name}}</h2>
+  </div>
+  <!-- START TAB PANEL -->
+  <tabset class="tab-container">
+    <tab active="true">
+      <tab-heading>
+        <i class="fa fa-file-text-o"></i> RESUMEN
+      </tab-heading>
+      <div class="animated fadeIn">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>HABILIDADES</th>
+              <th class="text-center">
+                <a ui-sref="app.selfevaluationdetail({id:evaluation.id, evaluated:evaluated.id})">Auto-Eval.</a>
+              </th>
+              <th class="text-center" ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+                <a ui-sref="app.evaluationdetail({id:evaluation.id, evaluator:eval.id, evaluated:evaluated.id})">{{ eval.acronym }}</a>
+              </th>
+              <th class="text-center">PROMEDIO</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td class="text-right">Total</td>
+              <td class="text-center">{{ getTotalSelfAverage() }}</td>
+              <td class="text-center" ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+                {{ getTotalEvaluatorAverage(eval.id) }}
+              </td>
+              <td class="text-center">{{ getTotalAverage() }}</td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr ng-repeat="criteria in criteriaList">
+              <td>{{ criteria.name }}</td>
+              <td class="text-center">{{ getSelfAverage(eval.id, criteria.id) }}</td>
+              <td class="text-center" ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+                <a ng-click="showDetail($event, eval, criteria)">{{ getAverage(eval.id, criteria.id) }}</a>
+              </td>
+              <td class="text-center"> {{ getCriteriaAverage(criteria.id) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </tab>
+    <tab>
+      <tab-heading>
+        <i class="fa fa-comment-o"></i> COMENTARIOS
+      </tab-heading>
+      <div class="animated fadeIn">
+        <div class="panel bg-light pos-rlt">
+          <span class="arrow left b-light"></span>
+          <div class="panel-body">
+           <strong>OBSERVACIONES FINALES DEL EVALUADOR</strong>
+          </div>
+        </div>
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="comment in commentList | filter:{comment_type: '0'}">
+              <td>
+                <p><strong>{{comment.comment_description}}</strong></p>
+                <p ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+                  <strong>{{ eval.acronym }}.- </strong>{{getEvaluatorComment(eval.id, comment.id)}}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="panel bg-light pos-rlt">
+          <span class="arrow left b-light"></span>
+          <div class="panel-body">
+           <strong>COMENTARIOS FINALES DEL EVALUADO</strong>
+          </div>
+        </div>
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="comment in commentList | filter:{comment_type: '1'}">
+              <td>
+                <p><strong>{{comment.comment_description}}</strong></p>
+                <p ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+                  <strong>{{ eval.acronym }}.- </strong>{{getEvaluatorComment(eval.id, comment.id)}}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>        
+      </div>
+    </tab>
+  </tabset>
+  <!-- END TAB PANEL -->
+  <a ng-click="printReport('printableSection')" class="text-sm btn btn-sm deep-orange-500">
+    <i class="fa fa-print i-20 pull-left"></i>
+    <span class="block clear text-left m-v-xs"><b class="font-bold">Imprimir</b>
+    </span>
+  </a>
+
+  <!--PRINTABLE SECTION-->
+  <div id="printableSection" class="hidden">
+    <img src="images/logo.jpg" style="width:150px; heigth:150px;"/>
+    <div class="text-center">
+      <p style="font-family:'arial'; font-size:9px; margin-bottom:5px;">RESUMEN</p>
+    </div>
+    <table class="printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+      <tbody>
+        <tr>
+          <td class="text-right">Nombre del evaluado:</td>
+          <td><span style="padding-left:10px;"><strong>{{evaluated.name | uppercase}}</strong></span></td>
+        </tr>
+        <tr>
+          <td class="text-right">Cargo:</td>
+          <td><span style="padding-left:10px;"><strong>{{evaluated.position}}</strong></span></td>
+        </tr>
+        <tr>
+          <td class="text-right">Año:</td>
+          <td><span style="padding-left:10px;"><strong>{{evaluated.year}}</strong></span></td>
+        </tr>
+        <tr>
+          <td class="text-right">Area:</td>
+          <td><span style="padding-left:10px;"><strong>{{evaluated.area}}</strong></span></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+      <thead>
+        <tr>
+          <th>HABILIDADES</th>
+          <th class="text-center">Auto-Eval.</th>
+          <th class="text-center" ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+            <a ui-sref="app.evaluationdetail({id:evaluation.id, evaluator:eval.id, evaluated:evaluated.id})">{{ eval.acronym }}</a>
+          </th>
+          <th class="text-center">PROMEDIO</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td class="text-right">Total</td>
+          <td class="text-center">{{ getTotalSelfAverage() }}</td>
+          <td class="text-center" ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+            {{ getTotalEvaluatorAverage(eval.id) }}
+          </td>
+          <td class="text-center">{{ getTotalAverage() }}</td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr ng-repeat="criteria in criteriaList">
+          <td>{{ criteria.name }}</td>
+          <td class="text-center">{{ getSelfAverage(eval.id, criteria.id) }}</td>
+          <td class="text-center" ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+            <a ng-click="showDetail($event, eval, criteria)">{{ getAverage(eval.id, criteria.id) }}</a>
+          </td>
+          <td class="text-center"> {{ getCriteriaAverage(criteria.id) }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+      <thead>
+        <tr>
+          <th>OBSERVACIONES FINALES DEL EVALUADOR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="comment in commentList | filter:{comment_type: '0'}">
+          <td>
+            <p><strong>{{comment.comment_description}}</strong></p>
+            <p ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+              <strong>{{ eval.acronym }}.- </strong>{{getEvaluatorComment(eval.id, comment.id)}}
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+      <thead>
+        <tr>
+          <th>COMENTARIOS FINALES DEL EVALUADO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="comment in commentList | filter:{comment_type: '1'}">
+          <td>
+            <p><strong>{{comment.comment_description}}</strong></p>
+            <p ng-repeat="eval in evaluatorList | orderBy:'acronym'">
+              <strong>{{ eval.acronym }}.- </strong>{{getEvaluatorComment(eval.id, comment.id)}}
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+  </div>
+  <!--END PRINTABLE SECTION-->
+
+
+  <!--DIALOG DETAIL-->
+  <div style="visibility: hidden">
+    <div class="md-dialog-container" id="dialogDetail">
+      <md-dialog aria-label="Detalle de evaluación">
+        <md-toolbar>
+          <div class="md-toolbar-tools deep-orange">
+            <h2>Detalle de evaluación</h2>
+            <span flex></span>
+            <md-button aria-label="Cancelar" ng-click="cancel()">
+              <i class="mdi-navigation-close i-24"></i>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <md-subheader>
+          Evaluador: {{evaluator.name}} <br/>
+          Criterio:  {{criteria.name}}
+        </md-subheader>
+        <md-dialog-content style="min-width:350px; max-width:550px; max-height:350px;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>PREGUNTA</th>
+                <th class="text-center">EVAL.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="q in questionList">
+                <td>{{ q.question }}</td>
+                <td class="text-center">{{ q.answer | navalue }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-dialog-content>
+      </md-dialog>
+    </div>
+  </div>
+  <!--END DIALOG EXAMINATED-->
+</div>

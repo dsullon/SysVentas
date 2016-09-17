@@ -1,0 +1,42 @@
+<nav ui-nav>
+  <ul class="nav">
+    <li class="nav-header m-v-sm hidden-folded">
+      Menu principal
+    </li>
+    <li ng-hide="userLoggued.perfil=='COBRADOR'">
+      <a md-ink-ripple href>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon mdi-action-add-shopping-cart i-20"></i>
+        <span>Gestión de ventas</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li><a md-ink-ripple ui-sref="app.evaluation">Proformas</a></li>
+        <li ng-hide="userLoggued.perfil=='VENDEDOR'"><a md-ink-ripple ui-sref="app.type">Facturación</a></li>
+        <li class="b-b b m-v-sm"></li>
+        <li><a md-ink-ripple ui-sref="app.evaluation">Clientes</a></li>
+        <li ng-hide="userLoggued.perfil=='VENDEDOR'"><a md-ink-ripple ui-sref="app.type">Vendedores</a></li>
+      </ul>
+    </li>
+    <li ng-hide="userLoggued.perfil=='VENDEDOR'">
+      <a md-ink-ripple href>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon mdi-editor-attach-money i-20"></i>
+        <span>Gestión de cobranzas</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li><a md-ink-ripple ui-sref="app.usuarios">Registrar pago</a></li>     
+        <li ng-hide="userLoggued.perfil=='COBRADOR'"><a md-ink-ripple ui-sref="app.usuarios">Kardex</a></li>
+      </ul>
+    </li>
+    <li>
+      <a md-ink-ripple ng-click="logout()">
+        <i class="icon mdi-action-exit-to-app i-20"></i>
+        <span>Cerrar Sesión</span>
+      </a>
+    </li>
+  </ul>
+</nav>

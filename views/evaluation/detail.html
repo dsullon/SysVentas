@@ -1,0 +1,227 @@
+<div class="row" ng-controller="EvaluationDetailCtrl" ng-cloak>
+  <h4>Evaluado: <strong>{{evaluated.name}}</strong> - Evaluador: <strong>{{evaluator.name}}</strong></h4>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-9 col-lg-10">
+      <!-- START TAB PANEL-->
+      <div class="md-whiteframe-z0 bg-white">
+        <ul class="nav nav-lines nav-tabs nav-justified">
+          <li class="active">
+            <a href data-toggle="tab" data-target="#tab1">COMPETENCIA</a>
+          </li>
+          <li>
+            <a href data-toggle="tab" data-target="#tab2">COMENTARIOS</a>
+          </li>
+          <li>
+            <a href data-toggle="tab" data-target="#tab3">RESUMEN</a>
+          </li>
+        </ul>
+        <div class="tab-content p m-b-md clear b-t b-t-2x">
+          <div role="tabpanel" class="tab-pane animated fadeInDown active" id="tab1">
+            <div layout-gt-xs="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-2">
+                    <button class="btn btn-xs btn-sm btn-addon deep-orange-500" ng-click="prev()">Anterior</button>
+                  </div>
+                  <div class="col-md-8 text-center">
+                    <strong>{{criteriaSelected.name}}</strong>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-xs btn-sm btn-addon deep-orange-500" ng-click="next()">Siguiente</button>
+                  </div>
+                </div>             
+              </div>
+            </div>
+            <div class="row" ng-if="criteriaSelected.note">
+              <div class="alert alert-warning text-center">{{criteriaSelected.note}}</div>
+            </div>
+            <!--EVALUATION QUESTION-->
+            <div class="col-xs-12 col-md-12">
+              <table class="table">
+                <tfoot>
+                  <tr>
+                    <td colspan="2" class="text-right">PROMEDIO DE LA COMPETENCIA:</td>
+                    <td >{{average}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="text-right">PROMEDIO TOTAL:</td>
+                    <td >{{totalAverage}}</td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr ng-repeat="question in questionList | filter: {question_criteria:criteriaSelected.id}:true">
+                    <td>
+                      <div ng-class="{'md-list-item-left md-long-text circle grey-600':question.answer=='','md-list-item-left md-long-text circle green-600':question.answer!=''}">
+                        <i ng-class="{'mdi-action-label i-24': question.answer=='','mdi-action-done i-24': question.answer!=''}"></i>
+                      </div>
+                    </td>
+                    <td>{{question.question_description}}</td>
+                    <td class="text-right" style="width:20px;">
+                      {{question.answer | navalue}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--END EVALUATION QUESTION-->
+          </div>
+          <div role="tabpanel" class="tab-pane animated fadeInDown" id="tab2">
+            <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr ng-repeat="comment in commentList">
+                    <td>
+                      <div ng-class="{'md-list-item-left md-long-text circle grey-600':comment.response=='','md-list-item-left md-long-text circle green-600':comment.response!=''}">
+                        <i class="mdi-editor-insert-comment i-24"></i>
+                      </div>
+                    </td>
+                    <td>
+                      <strong>{{comment.comment_description}}</strong><br/>
+                      {{comment.response}}
+                    </td>
+                    <td class="text-right" style="width:20px;">
+                      <div ng-if="comment.response_type==2">{{comment.response}}</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane animated fadeInDown" id="tab3">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                      <th>COMPETENCIA</th>
+                      <th class="text-center" style="width:20px;">PREGUNTAS CONTESTADAS</th>
+                      <th class="text-center" style="width:20px;">PREGUNTAS SIN CONTESTAR</th>
+                      <th class="text-center" style="width:20px;">PROMEDIO</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="text-right">PROMEDIO GENERAL:</td>
+                    <td class="text-center">{{totalAverage}}</td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr ng-repeat="c in criteria">
+                      <td>{{c.name}}</td>
+                      <td class="text-center">{{questionsAnsweredPerCriteria(c.id)}}</td>
+                      <td class="text-center">{{questionsUnAnsweredPerCriteria(c.id)}}</td>
+                      <td class="text-center">{{averagePerCriteria(c.id)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <a ng-click="printReport('printableSection')" class="text-sm btn btn-sm deep-orange-500">
+              <i class="fa fa-print i-20 pull-left"></i>
+              <span class="block clear text-left m-v-xs"><b class="font-bold">Imprimir</b>
+              </span>
+            </a>
+            <!--PRINTABLE SECTION-->
+            <div id="printableSection" class="hidden">
+              <img src="images/logo.jpg" style="width:150px; heigth:150px;"/>
+              <div class="text-center">
+                <p style="font-family:'arial'; font-size:9px; margin-bottom:5px;">COMPETENCIAS</p>
+              </div>
+              <table class="printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+                <tbody>
+                  <tr>
+                    <td class="text-right">Fecha:</td>
+                    <td><span style="padding-left:10px;"><strong>{{currentDate | date:"dd/MM/yyyy"}}</strong></span></td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">Evaluador:</td>
+                    <td><span style="padding-left:10px;"><strong>{{evaluator.name | uppercase}}</strong></span></td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">Nombre del evaluado:</td>
+                    <td><span style="padding-left:10px;"><strong>{{evaluated.name | uppercase}}</strong></span></td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">Año:</td>
+                    <td><span style="padding-left:10px;"><strong>{{evaluated.year}}</strong></span></td>
+                  </tr>
+                  <tr>
+                    <td class="text-right">Area:</td>
+                    <td><span style="padding-left:10px;"><strong>{{evaluated.area}}</strong></span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div ng-repeat="questionPerCriteria in questionToFilter() | filter:filterQuestions">
+                <table class="table table-bordered printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+                  <thead>
+                    <tr>
+                        <th>{{questionPerCriteria.criteria_name}}</th>
+                        <th style="width:20px;">EVALUACI.</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <td class="text-right">Promedio:</td>
+                      <td class="text-center">{{averagePerCriteria(questionPerCriteria.question_criteria)}}</td>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr ng-repeat="question in questionList | filter:{criteria_name: questionPerCriteria.criteria_name}">
+                        <td>{{question.question_description}}</td>
+                        <td class="text-center">{{question.answer | navalue}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-center">
+                <p style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+                  <strong>NOTAS FINALES</strong>
+                </p>
+              </div>
+              <table class="table table-bordered printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+                <thead>
+                  <tr>
+                      <th>COMPETENCIA</th>
+                      <th class="text-center" style="width:20px;">PREGUNTAS CONTESTADAS</th>
+                      <th class="text-center" style="width:20px;">PREGUNTAS SIN CONTESTAR</th>
+                      <th class="text-center" style="width:20px;">PROMEDIO</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="text-right">PROMEDIO GENERAL:</td>
+                    <td class="text-center">{{totalAverage}}</td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr ng-repeat="c in criteria">
+                      <td>{{c.name}}</td>
+                      <td class="text-center">{{questionsAnsweredPerCriteria(c.id)}}</td>
+                      <td class="text-center">{{questionsUnAnsweredPerCriteria(c.id)}}</td>
+                      <td class="text-center">{{averagePerCriteria(c.id)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-center">
+                <p style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+                  <strong>OBSERVACIONES FINALES DEL EVALUADOR</strong>
+                </p>
+              </div>
+              <table class="table table-bordered printTable" style="font-family:'arial'; font-size:9px; margin-bottom:5px;">
+                <tbody ng-repeat="comment in commentList">
+                  <tr>
+                    <td><strong>{{comment.comment_description}}</strong></td>
+                  </tr>
+                  <tr>
+                    <td>{{comment.response}}</td>
+                  </tr>
+                </tbody>
+              </table>     
+            </div>
+            <div id="editor"></div>
+            <!--END PRINTABLE SECTION-->
+          </div>
+        </div>
+      </div>
+      <!-- END TAB PANEL-->      
+    </div>
+  </div>
+</div>

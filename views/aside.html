@@ -1,0 +1,24 @@
+<div class="box bg-white">
+  <div class="navbar md-whiteframe-z1 no-radius" ng-class="$state.current.data.theme ? $state.current.data.theme.primary : app.setting.theme.primary">
+      <!-- brand
+      <a class="navbar-brand" style="background:black;">
+        <img src="images/logo.png" alt="." class="valing" style="max-height: 60px;">
+      </a>
+      <!-- / brand -->
+  </div>
+  <div class="box-row">
+    <div class="box-cell scrollable hover">
+      <div class="box-inner">
+        <div class="p hidden-folded" ng-class="$state.current.data.theme ? $state.current.data.theme.primary+'-50' : app.setting.theme.primary+'-50'" 
+        style="background-image:url(images/bg.png); background-size:cover">
+          <div class="rounded w-64 bg-white inline pos-rlt">
+            <img ng-src="images/employee/small/{{userLoggued.acronym | lowercase}}.jpg" on-error-src="images/small/no-image.jpg" class="img-responsive rounded">
+          </div>
+          <span class="block font-bold">{{userLoggued.name}}</span>
+          {{userLoggued.position}}
+        </div>
+        <div id="nav" ng-include="'views/partials/aside.nav.uikit.html'"></div>
+      </div>
+    </div>
+  </div>
+</div>

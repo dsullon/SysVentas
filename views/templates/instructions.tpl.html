@@ -1,0 +1,65 @@
+<md-dialog aria-label="Instrucciones">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools deep-orange">
+        <h2>Instrucciones</h2>
+        <span flex></span>
+        <md-button aria-label="Cancelar" ng-click="cancel()">
+          <i class="mdi-navigation-close i-24"></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:500px;">
+      <div class="md-dialog-content">
+        <ul class="text-md">
+            <li>
+              Cada pregunta debe ser respondida según el siguiente criterio de evaluación:
+              <table class="table table-striped text-sm">
+                <thead>
+                  <tr>
+                    <th>CALIFICACIÓN</th>
+                    <th >DESCRIPCIÓN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>10</strong></td>
+                    <td>Excelente</td>
+                  </tr>
+                  <tr>
+                    <td><strong>8 - 9</strong></td>
+                    <td>Muy Bueno</td>
+                  </tr>
+                  <tr>
+                    <td><strong>6 - 7</strong></td>
+                    <td>Bueno</td>
+                  </tr>
+                  <tr>
+                    <td><strong>5</strong></td>
+                    <td>Promedio</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3 - 4</strong></td>
+                    <td>Regular</td>
+                  </tr>
+                  <tr>
+                    <td><strong>1 - 2</strong></td>
+                    <td>Necesita mejorar</td>                    
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+                Si en un determinado rubro, usted considera que no tiene suficientes elementos para 
+                calificar seleccione <strong>N/A</strong>. Asimismo, si en relación con una determinada actividad, 
+                usted considera que todavía no debe exigirse tal competencia al evaluado, escriba <strong>N/A</strong>.
+            </li>
+            <li>
+                Al momento de calificar cada una de las habilidades que se describen a continuación, 
+                considere que los estándares de calificación deben estar acordes al nivel de experiencia del evaluado.
+            </li>
+        </ul>
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>

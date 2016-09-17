@@ -1,0 +1,28 @@
+<div class="row" ng-controller="TypeCtrl">
+  <div class="col-md-3">
+    <div class="hidden-sm hidden-xs" id="inbox-menu">
+      <div class="p-v">TIPOS DE EVALUACIÓN</div>
+      <ul class="nav nav-pills nav-stacked nav-sm">
+        <li ng-repeat="type in types | orderBy:'name'" ui-sref-active="is-active">
+          <a ui-sref="app.type.list({id:type.id})">
+            {{type.name}}
+          </a>
+        </li>
+      </ul>
+      <div class="p-v">
+        <form name="form">
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" ng-model="newType" placeholder="Nuevo tipo" required>
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="button" ng-click="create()" ng-disabled="form.$invalid">Crear</button>
+            </span>
+          </div>
+        </form>
+        <alert ng-if="alert!=null" type="{{alert.type}}" close="closeAlert()">{{alert.msg}}</alert>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div ui-view ></div>
+  </div>
+</div>

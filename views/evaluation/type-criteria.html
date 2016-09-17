@@ -1,0 +1,98 @@
+<div class="row" ng-controller="TypeCriteriaCtrl">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>CRITERIO</th>
+                <th><a class="action" ng-click="showNewQuestion();" tooltip-placement="top" tooltip="Crear nuevo criterio.">
+                    <i class="fa fa-plus"></i> Nuevo
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="criteria in criterias">
+                <td>
+                    <p>{{criteria.name}}</p>
+                </td>
+                <td>
+                    <div layout-gt-xs="row">
+                        <a ng-click="showEditQuestion(criteria);" title="Editar" style="padding-right:10px;"><i class="fa fa-edit i-20"></i></a>
+                        <a ng-click="deleteQuestion(criteria)" title="Eliminar" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                    </div>                            
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--EDIT QUESTION DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="editQuestion">
+            <md-dialog aria-label="Editar pregunta">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Editar pregunta</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <table class="printTable">
+                        <tr>
+                            <td style="width:10px;"><strong>Criterio:</strong></td>
+                            <td>{{model.selectedCriteria.name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10px;"><strong>Tipo:</strong></td>
+                            <td>{{model.questionEvalType | evaltype}}</td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <textarea ng-model="questionSelected.description" class="form-control" rows="6" placeholder="Ingrese el detalle de la pregunta"></textarea>
+                    </div>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="updateQuestion()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END EDIT QUESTION DIALOG-->
+    <!--NEW QUESTION DIALOG-->
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="newQuestion">
+            <md-dialog aria-label="Crear pregunta">
+                <md-toolbar>
+                    <div class="md-toolbar-tools deep-orange">
+                    <h3>Nueva pregunta</h3>
+                    <span flex></span>
+                    <md-button aria-label="Cancelar" ng-click="cancel()">
+                        <i class="mdi-navigation-close i-24"></i>
+                    </md-button>
+                    </div>
+                </md-toolbar>
+                <md-dialog-content style="min-width:550px;">
+                    <table class="printTable">
+                        <tr>
+                            <td style="width:10px;"><strong>Criterio:</strong></td>
+                            <td>{{model.selectedCriteria.name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10px;"><strong>Tipo:</strong></td>
+                            <td>{{model.questionEvalType | evaltype}}</td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <textarea ng-model="newQuestion" class="form-control" rows="6" placeholder="Ingrese el detalle de la pregunta"></textarea>
+                    </div>
+                    <md-button class="md-warn md-raised deep-orange" ng-click="saveQuestion()">Grabar</md-button>
+                </md-dialog-content>
+            </md-dialog>
+        </div>
+    </div>
+    <!--END NEW QUESTION DIALOG-->
+</div>
+
+
+
+
+
+  
