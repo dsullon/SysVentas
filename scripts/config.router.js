@@ -61,10 +61,10 @@ angular.module('app')
                   }
                 }
             })
-            .state('app.evaluation', {
-              url: '/e',
-              templateUrl: 'views/evaluation/list.html',
-              data : { title: 'Listado de evaluaciones'},
+            .state('app.cliente', {
+              url: '/cliente',
+              templateUrl: 'views/cliente/list.html',
+              data : { title: 'Listado de clientes'},
               resolve: {
                 auth : function(authFactory)
                 {
@@ -74,8 +74,28 @@ angular.module('app')
                   return $ocLazyLoad.load({
                     name: "app",
                     files: [
-                      'scripts/factories/evaluation.js',
-                      'scripts/controllers/evaluation.js'
+                      'scripts/factories/cliente.js',
+                      'scripts/controllers/cliente.js'
+                      ]
+                    });
+                  }
+              }
+            })
+            .state('app.crearCliente', {
+              url: '/cliente/nuevo',
+              templateUrl: 'views/cliente/nuevoCliente.html',
+              data : { title: 'Nuevo cliente'},
+              resolve: {
+                auth : function(authFactory)
+                {
+                    return authFactory.proccessNoAuth();
+                },
+                load: function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                    name: "app",
+                    files: [
+                      'scripts/factories/cliente.js',
+                      'scripts/controllers/cliente.js'
                       ]
                     });
                   }
