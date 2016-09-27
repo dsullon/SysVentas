@@ -1,4 +1,4 @@
-<div class="row" ng-controller="ClienteCtrl" ng-cloak>
+<div class="row" ng-controller="NuevoClienteCtrl" ng-cloak>
   <div class="row row-xs">
     <form name="formValidate" class="form-horizontal form-validation">
         <div class="panel panel-default">
@@ -9,56 +9,92 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Apellidos:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Apellidos:" required>
+                        <input type="text" class="form-control" placeholder="Apellidos:" 
+                        ng-model="nuevo.apellidos" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Nombres:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Nombres" required>
+                        <input type="text" class="form-control" placeholder="Nombres" 
+                        ng-model="nuevo.nombres"required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Documento:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" ng-options="doc.id as doc.descripcion for doc in listaDocumentos" ng-model="nuevo.documento" required/>
+                    </div>
+                    <label class="col-sm-1 control-label">Número:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="Número de documento" 
+                            ng-model="nuevo.numeroDocumento"required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Zona:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" ng-options="zona.id as zona.descripcion for zona in listaZonas" ng-model="nuevo.zona" required/>
+                    </div>
+                    <label class="col-sm-1 control-label">Úbigeo:</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" ng-click="buscarUbigeo();">
+                                    <i class="fa fa-search"></i></button>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Buscar el úbigeo" 
+                            ng-model="ubigeo.descripcion" disabled required>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Dirección:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Dirección" required>
+                        <textarea class="form-control" rows="3" required ng-model="nuevo.direccion"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Teléfono 1:</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Teléfono 1" required>
+                        <input type="text" class="form-control" placeholder="Teléfono 1" 
+                        ng-model="nuevo.telefono1" required>
                     </div>
                     <label class="col-sm-3 control-label">Teléfono 2:</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Teléfono 2" required>
+                        <input type="text" class="form-control" placeholder="Teléfono 2" 
+                        ng-model="nuevo.telefono2" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Celular 1:</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Celular 1" required>
+                        <input type="text" class="form-control" placeholder="Celular 1" 
+                        ng-model="nuevo.celular1"required>
                     </div>
                     <label class="col-sm-3 control-label">Celular 2:</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="Celular 2" required>
+                        <input type="text" class="form-control" placeholder="Celular 2" 
+                        ng-model="nuevo.celular2" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Email 1:</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" placeholder="email 1" required >    
+                        <input type="email" class="form-control" placeholder="email 1" 
+                        ng-model="nuevo.email1" required >    
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Email 2:</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" placeholder="email 2" required >    
+                        <input type="email" class="form-control" placeholder="email 2" 
+                        ng-model="nuevo.email2" required >    
                     </div>
                 </div>
             </div>
             <footer class="panel-footer text-right">
-                <button type="submit" class="btn btn-info">Grabar</button>
+                <button class="btn btn-info" ng-click="save()">Grabar</button>
             </footer>
         </div>
     </form>

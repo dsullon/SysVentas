@@ -1,12 +1,12 @@
 <?php
 defined("BASEPATH" or die("El acceso al script no está permitido"));
 
-class Usuario extends CI_Controller
+class Empleado extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("usuario_model");
+		$this->load->model("empleado_model");
 	}
     
     public function login()
@@ -17,7 +17,7 @@ class Usuario extends CI_Controller
                 'usuario' => $this->input->post("usuario"),
                 'password' => md5($this->input->post('password'))
             );	
-            $user = $this->usuario_model->login($data);
+            $user = $this->empleado_model->login($data);
             if($user){
                 header("HTTP/1.1 200 OK");
                 echo json_encode(array("respuesta" => "success","user" => $user));

@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">Úbigeos</h3>
+    <input ng-model="buscarUbigeo">
+</div>
+<div class="modal-body">
+    <ul>
+        <li ng-repeat="item in items | filter:buscarUbigeo">
+            <a ng-click="selected.item = item">{{ item.codigo }} - {{ item.descripcion }}</a>
+        </li>
+    </ul>
+    Úbigeo seleccionado: <b>{{ selected.item.codigo }} - {{ selected.item.descripcion }}</b>
+</div>
+<div class="modal-footer">                  
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

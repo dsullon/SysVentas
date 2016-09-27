@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title">Zonas</h3>
+</div>
+<div class="modal-body">
+    <ul>
+        <li ng-repeat="item in items">
+            <a ng-click="selected.item = item">{{ item.codigo }} - {{ item.descripcion }}</a>
+        </li>
+    </ul>
+    Zona seleccionada: <b>{{ selected.item.codigo }} - {{ selected.item.descripcion }}</b>
+</div>
+<div class="modal-footer">                  
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

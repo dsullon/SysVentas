@@ -15,8 +15,8 @@ angular.module('app')
       isIE && angular.element($window.document.body).addClass('ie');
       // config
       $scope.app = {
-        name: 'PRCP',
-        version: '1.0.3',
+        name: 'SysVentas',
+        version: '1.0.0',
         // for chart colors
         color: {
           primary: '#3f51b5',
@@ -81,4 +81,19 @@ angular.module('app')
           $scope.userLoggued = $.parseJSON(sesionesControl.get("userLoggued"));
         }, true);
     }
-  ]);
+  ])
+  .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
+    $scope.items = items;
+     $scope.selected = {
+      item: null
+    };
+
+    $scope.ok = function () {
+      $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }])
+  ;

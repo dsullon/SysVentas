@@ -75,7 +75,7 @@ angular.module('app')
                     name: "app",
                     files: [
                       'scripts/factories/cliente.js',
-                      'scripts/controllers/cliente.js'
+                      'scripts/controllers/cliente/cliente.js'
                       ]
                     });
                   }
@@ -95,16 +95,19 @@ angular.module('app')
                     name: "app",
                     files: [
                       'scripts/factories/cliente.js',
-                      'scripts/controllers/cliente.js'
+                      'scripts/factories/documento.js',
+                      'scripts/factories/ubigeo.js',
+                      'scripts/factories/zona.js',
+                      'scripts/controllers/cliente/nuevo.js'
                       ]
                     });
                   }
               }
             })
-            .state('app.create', {
-              url: '/e/new',
-              templateUrl: 'views/evaluation/create.html',
-              data : { title: 'Evaluación' },
+            .state('app.lote', {
+              url: '/lote',
+              templateUrl: 'views/lote/list.html',
+              data : { title: 'Listado de lotes'},
               resolve: {
                 auth : function(authFactory)
                 {
@@ -114,17 +117,32 @@ angular.module('app')
                   return $ocLazyLoad.load({
                     name: "app",
                     files: [
-                      'scripts/factories/evaluation.js',
-                      'scripts/factories/evaluation-type.js',
-                      'scripts/factories/evaluation-criteria.js',
-                      'scripts/factories/question-template.js',
-                      'scripts/factories/comment-template.js',
-                      'scripts/factories/employee.js',
-                      'scripts/controllers/evaluation/create.js'
+                      'scripts/factories/lote.js',
+                      'scripts/controllers/lote/lote.js'
                       ]
                     });
                   }
-                }
+              }
+            })
+            .state('app.crearLote', {
+              url: '/lote/nuevo',
+              templateUrl: 'views/lote/nuevoLote.html',
+              data : { title: 'Nuevo lote'},
+              resolve: {
+                auth : function(authFactory)
+                {
+                    return authFactory.proccessNoAuth();
+                },
+                load: function($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                    name: "app",
+                    files: [
+                      'scripts/factories/lote.js',
+                      'scripts/controllers/lote/nuevo.js'
+                      ]
+                    });
+                  }
+              }
             })
             .state('app.type', {
               url: '/e/type',
@@ -370,8 +388,8 @@ angular.module('app')
                 return $ocLazyLoad.load({
                   name: "app",
                   files: [
-                    'scripts/factories/usuario.js',
-                    'scripts/controllers/usuario/login.js'
+                    'scripts/factories/empleado.js',
+                    'scripts/controllers/empleado/login.js'
                     ]
                   });
                 }

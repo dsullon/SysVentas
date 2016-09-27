@@ -1,0 +1,82 @@
+<div class="row" ng-controller="NuevLoteCtrl" ng-cloak>
+  <div class="row row-xs">
+    <form name="formValidate" class="form-horizontal form-validation">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-white">
+                <strong>Datos del Lote</strong>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Medida 1:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Medida 1" 
+                        ng-model="nuevo.medida1" required>
+                    </div>
+                    <label class="col-sm-2 control-label">Medida 2:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Medida 2" 
+                        ng-model="nuevo.medida2" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Medida 3:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Medida 3" 
+                        ng-model="nuevo.medida3" required>
+                    </div>
+                    <label class="col-sm-2 control-label">Medida 4:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Medida 4" 
+                        ng-model="nuevo.medida4" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Medida 5:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Medida 5" 
+                        ng-model="nuevo.medida5" required>
+                    </div>
+                    <label class="col-sm-2 control-label">Área:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Área" 
+                        ng-model="nuevo.area" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Precio Total:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Precio Total" 
+                        ng-model="nuevo.precio" required>
+                    </div>
+                    <label class="col-sm-2 control-label">Precio M2:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Precio M2" 
+                        ng-model="nuevo.precioM2" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Reg. Predial:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Registro predial" 
+                        ng-model="nuevo.registroPredial" required>
+                    </div>
+                    <label class="col-sm-2 control-label">Reg. Municipal:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Registro municipal" 
+                        ng-model="nuevo.registroMunicipal" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Observación:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="5" required ng-model="nuevo.observacion"></textarea>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer text-right">
+                <button class="btn btn-info" ng-click="save()">Grabar</button>
+            </footer>
+        </div>
+    </form>
+  </div>
+</div>

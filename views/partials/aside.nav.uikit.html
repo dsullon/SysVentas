@@ -17,6 +17,8 @@
         <li class="b-b b m-v-sm"></li>
         <li><a md-ink-ripple ui-sref="app.cliente">Clientes</a></li>
         <li ng-hide="userLoggued.perfil=='VENDEDOR'"><a md-ink-ripple ui-sref="app.type">Vendedores</a></li>
+        <li class="b-b b m-v-sm"></li>
+        <li ng-hide="userLoggued.perfil=='VENDEDOR'"><a md-ink-ripple ui-sref="app.lote">Lotes</a></li>
       </ul>
     </li>
     <li ng-hide="userLoggued.perfil=='VENDEDOR'">

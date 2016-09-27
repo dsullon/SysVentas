@@ -1,0 +1,36 @@
+<a ui-sref="app.crearLote" md-ink-ripple class="btn btn-sm btn-addon deep-orange-500">
+  <i class="fa fa-plus"></i> NUEVO
+</a>
+<div class="row" ng-controller="LoteCtrl" ng-cloak>
+  <div class="row row-xs">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          LISTADO DE LOTES
+        </div>
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th>Nro. Doc.</th>
+              <th>Cliente</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="eval in clientes">
+              <td>{{eval.type | uppercase}}</td>
+              <td>{{eval.startDate | date :  "dd-MM-yyyy"}}</td>
+              <td>
+                <div layout-gt-xs="row">
+                  <a ng-if="eval.isClosed=='0'" ng-click="showToEvaluate(eval.id)" title="Visible para evaluados" style="padding-right:10px;"><i class="fa fa-eye i-20"></i></a>
+                  <a ng-click="closeEvaluation(eval.id)" title="Cerrar evaluación" style="padding-right:10px;"><i class="fa fa-times-circle i-20"></i></a>
+                  <a ng-click="deleteEvaluation(eval.id)" title="Eliminar evaluación" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                </dv>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

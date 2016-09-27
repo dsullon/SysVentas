@@ -1,10 +1,10 @@
-app.factory("userFactory", function($http, $location, $mdDialog, sesionesControl)
+app.factory("employeeFactory", function($http, $location, $mdDialog, sesionesControl)
 {
 	return{
         login : function(user)
         {
             return $http({
-                url: 'data/usuario/login',
+                url: 'data/Empleado/login',
                 method: "POST",
                 data : "usuario="+user.usuario+"&password="+user.password,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
