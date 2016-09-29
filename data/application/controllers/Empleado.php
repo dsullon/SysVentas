@@ -21,9 +21,6 @@ class Empleado extends CI_Controller
             if($user){
                 header("HTTP/1.1 200 OK");
                 echo json_encode(array("respuesta" => "success","user" => $user));
-            }else{
-                header("HTTP/1.1 404 Not Found");
-                echo json_encode(array("respuesta" => "No se encontró resultados."));
             }
         } 
         else

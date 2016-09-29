@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost', //'aymicg.com.pe',
-	'username' => 'root', //'aymicgco_prc',
-	'password' => '9900221662', //'appprc',
-	'database' => 'prcp',//'aymicgco_page',
+	'hostname' => 'aymicg.com.pe',
+	'username' => 'aymicgco_prc',
+	'password' => 'appprc',
+	'database' => 'aymicgco_page',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

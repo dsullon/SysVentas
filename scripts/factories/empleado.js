@@ -31,7 +31,7 @@ app.factory("employeeFactory", function($http, $location, $mdDialog, sesionesCon
                 $mdDialog.show(
                     $mdDialog.alert()
                     .title('SysVentas')
-                    .content('Error al consultar, intentélo nuevamente.')
+                    .content('Error al consultar, inténtelo nuevamente.')
                     .ariaLabel('Notificación')
                     .ok('Aceptar')
                 );
