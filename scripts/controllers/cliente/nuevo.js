@@ -1,4 +1,5 @@
 app.controller('NuevoClienteCtrl', function($scope, $modal, $mdDialog, $state, clienteFt, ZonaFt, UbigeoFt, DocumentoFt) {
+    $scope.ubigeo = null;
     $scope.nuevo = {
         'codigo': '',
         'apellidos': '',
@@ -41,7 +42,8 @@ app.controller('NuevoClienteCtrl', function($scope, $modal, $mdDialog, $state, c
         }
       });
       modalInstance.result.then(function (selectedItem) {
-          $scope.nuevo.ubigeo = selectedItem.id;
+          $scope.ubigeo = selectedItem;
+          $scope.nuevo.ubigeo = $scope.ubigeo.id;
         });
     }
 

@@ -63,7 +63,7 @@ angular.module('app')
             })
             .state('app.cliente', {
               url: '/cliente',
-              templateUrl: 'views/cliente/list.html',
+              templateUrl: 'views/cliente/lista.html',
               data : { title: 'Listado de clientes'},
               resolve: {
                 auth : function(authFactory)

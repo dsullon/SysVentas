@@ -1,0 +1,78 @@
+<button class="btn btn-link" ui-sref="app.crearCliente">
+  <span class="glyphicon glyphicon-plus"></span> Nuevo registro
+  </button>
+<div class="row" ng-controller="ClienteCtrl" ng-cloak>
+  <div class="row row-xs">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          LISTADO DE CLIENTES
+        </div>
+        <table st-table="rowCollectionPage" st-safe-src="clientes" class="table table-striped">
+          <thead>
+            <tr>
+              <th st-sort="name">Nombre</th>
+              <th st-sort="position">Telefono</th>
+              <th st-sort="position">Celular</th>
+              <th st-sort="position">Email</th>
+              <th></th>
+            </tr>
+            <tr>
+              <th>
+                <input st-search="'name'" placeholder="Buscar por nombre" class="input-sm form-control" type="search"/>
+              </th>
+              <th colspan="4">
+                <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="search"/>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in rowCollectionPage">
+              <td>{{row.apellidos | uppercase}}, {{row.nombres | uppercase}}</td>
+              <td>{{row.telefono1}}</td>
+              <td>{{row.celular1}}</td>
+              <td>{{row.email1}}</td>
+              <td style="width:10px;">
+                <div layout-gt-xs="row">
+                  <a ui-sref="app.editEmployee({id:row.id})" title="Editar usuario" style="padding-right:10px;"><i class="fa fa-edit i-20"></i></a>
+                  <a ng-click="delete(row.id)" title="Eliminar usuario" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="10" st-displayed-pages="5" class="no-margin"></div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th>Nro. Doc.</th>
+              <th>Cliente</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="eval in clientes">
+              <td>{{eval.type | uppercase}}</td>
+              <td>{{eval.startDate | date :  "dd-MM-yyyy"}}</td>
+              <td>
+                <div layout-gt-xs="row">
+                  <a ng-if="eval.isClosed=='0'" ng-click="showToEvaluate(eval.id)" title="Visible para evaluados" style="padding-right:10px;"><i class="fa fa-eye i-20"></i></a>
+                  <a ng-click="closeEvaluation(eval.id)" title="Cerrar evaluación" style="padding-right:10px;"><i class="fa fa-times-circle i-20"></i></a>
+                  <a ng-click="deleteEvaluation(eval.id)" title="Eliminar evaluación" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                </dv>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

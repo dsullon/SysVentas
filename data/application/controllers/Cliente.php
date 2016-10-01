@@ -35,7 +35,7 @@ class Cliente extends CI_Controller
             if($addNew)
             { 
                 header("HTTP/1.1 200 OK");
-                echo json_encode(array("respuesta" => "success", 'data' => $data));
+                echo json_encode(array("respuesta" => "success"));
             }
             else
             {   
