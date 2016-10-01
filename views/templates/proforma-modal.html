@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h3 class="modal-title">Proformas</h3>
+</div>
+<div class="modal-body">
+    <table st-table="rowCollectionPage" st-safe-src="items" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Proforma</th>
+                <th>Lote</th>
+                <th>Cliente</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="search"/>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in rowCollectionPage | filter: search" ng-click="selected.item = row">
+                <td>{{ row.numero }}</td>
+                <td>{{ row.codigo }}</td>
+                <td>{{ row.cliente | uppercase}}</td>
+                <td class="txt-sm text-danger"><a ui-sref="app.crearFactura({id:row.id})" ng-click="cancel()">Crear Factura</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="5" st-displayed-pages="10" class="no-margin"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    Proforma seleccionada: <b>{{ selected.item.Codigo }}</b>
+</div>
+<div class="modal-footer">                  
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

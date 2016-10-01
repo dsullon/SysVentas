@@ -18,16 +18,13 @@
               <th></th>
             </tr>
             <tr>
-              <th>
-                <input st-search="'name'" placeholder="Buscar por nombre" class="input-sm form-control" type="search"/>
-              </th>
               <th colspan="4">
                 <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="search"/>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="row in rowCollectionPage">
+            <tr ng-repeat="row in rowCollectionPage | filter: search">
               <td>{{row.apellidos | uppercase}}, {{row.nombres | uppercase}}</td>
               <td>{{row.telefono1}}</td>
               <td>{{row.celular1}}</td>
@@ -47,30 +44,6 @@
               </td>
             </tr>
           </tfoot>
-        </table>
-
-
-        <table class="table table-striped m-b-none">
-          <thead>
-            <tr>
-              <th>Nro. Doc.</th>
-              <th>Cliente</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="eval in clientes">
-              <td>{{eval.type | uppercase}}</td>
-              <td>{{eval.startDate | date :  "dd-MM-yyyy"}}</td>
-              <td>
-                <div layout-gt-xs="row">
-                  <a ng-if="eval.isClosed=='0'" ng-click="showToEvaluate(eval.id)" title="Visible para evaluados" style="padding-right:10px;"><i class="fa fa-eye i-20"></i></a>
-                  <a ng-click="closeEvaluation(eval.id)" title="Cerrar evaluación" style="padding-right:10px;"><i class="fa fa-times-circle i-20"></i></a>
-                  <a ng-click="deleteEvaluation(eval.id)" title="Eliminar evaluación" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
-                </dv>
-              </td>
-            </tr>
-          </tbody>
         </table>
       </div>
     </div>

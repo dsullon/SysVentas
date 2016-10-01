@@ -1,6 +1,6 @@
 <?php
 
-class Cliente_model extends CI_Model
+class Lote_model extends CI_Model
 {
     public function __construct()
     {
@@ -12,7 +12,7 @@ class Cliente_model extends CI_Model
         if (!is_null($id)) {
             $query = $this->db
             ->select("*")
-            ->from('tbl_cliente')
+            ->from('tbl_lote')
             ->where('e.id', $id)->get();
             if ($query->num_rows() === 1) {
                 return $query->row_array();
@@ -21,7 +21,7 @@ class Cliente_model extends CI_Model
         }
         $query = $this->db
         ->select("*")
-        ->from('tbl_cliente')
+        ->from('tbl_lote')
         ->get();
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -37,6 +37,7 @@ class Cliente_model extends CI_Model
             'numeroDocumento' => $obj['numeroDocumento'], 'celular1' => $obj["celular1"], 'celular2' => $obj["celular2"], 
             'email1' => $obj["email1"], 'email2' => $obj["email2"], 'idUbigeo' => $obj["ubigeo"], 'idZona' => $obj["zona"]))
         ->insert('tbl_cliente');
+        log_message('ERROR',$this->db->last_query());
         if ($this->db->affected_rows() === 1) {
            return TRUE;
         }else{

@@ -1,0 +1,74 @@
+<div class="row" ng-controller="NuevaFacturaCtrl" ng-cloak>
+  <div class="row row-xs">
+    <form name="form" class="form-horizontal form-validation">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-white">
+                <strong>Datos de la factura</strong>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Número:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ng-model="nuevo.numero" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label">Proforma:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ng-model="proforma.numero" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Cliente:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Buscar el cliente" 
+                        ng-model="proforma.cliente" disabled required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Lote:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" placeholder="Buscar el lote" 
+                        ng-model="proforma.codigo" disabled required>
+                    </div>
+                    <label class="col-sm-2 control-label">Area:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Buscar el lote" 
+                        ng-model="proforma.area" disabled required>
+                    </div>
+                    <label class="col-sm-1 control-label">Precio:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Buscar el lote" 
+                        ng-model="proforma.precioTotal" disabled required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Descripción 1:</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" rows="3" disabled required maxlength="100" ng-model="proforma.descripcion1"></textarea>
+                    </div>
+                    <label class="col-sm-2 control-label">Descripción 2:</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" rows="3" disabled required maxlength="100" ng-model="proforma.descripcion2"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-heading bg-white">
+                <strong>Datos del Pago</strong>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Nro. Cuotas</label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" placeholder="mínimo 12 cuotas2" ng-model="nuevo.cuotas" ui-validate=" '$value >= 12' " required>
+                    </div>
+                    <label class="col-sm-3 checkbox ui-checks">
+                        <input type="checkbox" ng-model="nuevo.domingos" required><i></i> Incluir Domingos
+                    </label>
+                </div>               
+            </div>
+            <footer class="panel-footer text-right">
+                <button class="btn btn-info" ng-click="save()" ng-disabled="form.$invalid">Grabar</button>
+            </footer>
+        </div>
+    </form>
+  </div>
+</div>

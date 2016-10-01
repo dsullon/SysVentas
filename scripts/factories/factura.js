@@ -1,24 +1,24 @@
-app.factory("ClienteFt", function($http, $location)
+app.factory("FacturaFt", function($http, $location)
 {
 	return{
 		get : function(id)
 		{		
             return $http({
-                url: 'data/Cliente/get' + '/'+ id,
+                url: 'data/Factura/get' + '/'+ id,
                 method: 'GET'
             });
 		},
         getAll : function(type)
 		{		
             return $http({
-                url: 'data/Cliente/getAll',
+                url: 'data/Factura/getAll',
                 method: 'GET'
             });
 		},
         update : function(data)
 		{
             return $http({
-                url: 'data/Cliente/update',
+                url: 'data/Factura/update',
                 method: "POST",
                 data : data,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -27,7 +27,7 @@ app.factory("ClienteFt", function($http, $location)
         create : function(data)
 		{
             return $http({
-                url: 'data/Cliente/create',
+                url: 'data/Factura/create',
                 method: "POST",
                 data : data,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -36,7 +36,7 @@ app.factory("ClienteFt", function($http, $location)
         delete : function(data)
 		{
             return $http({
-                url: 'data/Cliente/delete',
+                url: 'data/Factura/delete',
                 method: "POST",
                 data : data,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}

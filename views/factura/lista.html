@@ -1,0 +1,55 @@
+<div class="row" ng-controller="FacturaCtrl" ng-cloak>
+  <button class="btn btn-link" ng-click="buscarProforma()">
+    <span class="glyphicon glyphicon-plus"></span> Nuevo registro
+  </button>
+  <div class="row row-xs">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          LISTADO DE FACTURAS
+        </div>
+        <table st-table="rowCollectionPage" st-safe-src="facturas" class="table table-striped">
+          <thead>
+            <tr>
+              <th st-sort="name">Número</th>
+              <th st-sort="position">Fecha</th>
+              <th st-sort="position">Lote</th>
+              <th st-sort="position">Area</th>
+              <th st-sort="position">Cliente</th>
+              <th st-sort="position">Elaborado por:</th>
+              <th></th>
+            </tr>
+            <tr>
+              <th colspan="4">
+                <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="search"/>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in rowCollectionPage | filter: search">
+              <td> <a >{{ row.numero }}</a></td>
+              <td>{{ row.fechaProforma | date : "dd-MM-yyyy" }}</td>
+              <td>{{row.codigo}}</td>
+              <td>{{row.area}}</td>
+              <td>{{row.cliente}}</td>
+              <td>{{row.usuario}}</td>
+              <td style="width:10px;">
+                <div layout-gt-xs="row">
+                  <span ng-if="row.facturado == '1'" class="text-danger"><strong>Facturado</strong></span>
+                  <a ng-if="row.facturado == '0'" ng-click="delete(row.id)" title="Eliminar proforma" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="10" st-displayed-pages="5" class="no-margin"></div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

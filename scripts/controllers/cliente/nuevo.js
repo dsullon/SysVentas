@@ -1,4 +1,4 @@
-app.controller('NuevoClienteCtrl', function($scope, $modal, $mdDialog, $state, clienteFt, ZonaFt, UbigeoFt, DocumentoFt) {
+app.controller('NuevoClienteCtrl', function($scope, $modal, $mdDialog, $state, ClienteFt, ZonaFt, UbigeoFt, DocumentoFt) {
     $scope.ubigeo = null;
     $scope.nuevo = {
         'codigo': '',
@@ -51,17 +51,16 @@ app.controller('NuevoClienteCtrl', function($scope, $modal, $mdDialog, $state, c
         var data = $.param({
             'cliente': $scope.nuevo
         });
-        clienteFt.create(data).success(function(data)
+        ClienteFt.create(data).success(function(data)
         {
             $state.go("app.cliente");
         }).error(function(){
             $mdDialog.show(
             $mdDialog.alert()
-            .title('Evaluación')
+            .title($scope.app.name)
             .content('Ocurrió un error al crear el cliente.')
             .ariaLabel('Notificación')
             .ok('Aceptar')
-            .targetEvent(ev)
             );
         });
     }

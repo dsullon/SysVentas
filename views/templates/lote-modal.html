@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h3 class="modal-title">Lotes</h3>
+</div>
+<div class="modal-body">
+    <table st-table="rowCollectionPage" st-safe-src="items" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Area</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="search"/>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in rowCollectionPage | filter: search" ng-click="selected.item = row">
+                <td>{{ row.codigo }}</td>
+                <td>{{ row.area }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                <div st-pagination="" st-items-by-page="5" st-displayed-pages="10" class="no-margin"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    Lote seleccionado: <b>{{ selected.item.codigo }},  {{ selected.item.nombres }}</b>
+</div>
+<div class="modal-footer">                  
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

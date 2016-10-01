@@ -23,7 +23,7 @@ app.controller('NuevLoteCtrl', function($scope, $modal, $mdDialog, $state, LoteF
         }).error(function(){
             $mdDialog.show(
             $mdDialog.alert()
-            .title('Evaluación')
+            .title($scope.app.name)
             .content('Ocurrió un error al crear el cliente.')
             .ariaLabel('Notificación')
             .ok('Aceptar')
