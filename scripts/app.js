@@ -28,5 +28,6 @@ angular
     'oc.lazyLoad',
     'angular-loading-bar',
     'xeditable',
-    'smart-table'
+    'smart-table',
+    'textAngular'
   ]);
