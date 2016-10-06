@@ -2,7 +2,7 @@ app.controller('NuevaFacturaCtrl', function($scope, $modal, $mdDialog, $state, $
     $scope.nuevo = {
         'numero': '<<Nuevo>>',
         'cuotas': 12,
-        'domingos': '0',
+        'descuento': false,
         'empleado': $scope.userLoggued.id
     }
 
@@ -10,10 +10,11 @@ app.controller('NuevaFacturaCtrl', function($scope, $modal, $mdDialog, $state, $
     {
         $scope.proforma = data;
         console.log(data);
-        $scope.nuevo.cliente = $scope.proforma.dCliente
+        $scope.nuevo.cliente = $scope.proforma.idCliente
         $scope.nuevo.lote = $scope.idLote;
         $scope.nuevo.precio = $scope.proforma.precioTotal;
         $scope.nuevo.precioMt2 = $scope.proforma.precioM2;
+        $scope.nuevo.descripcion = $scope.proforma.descripcion;
     });
 
     $scope.save = function() {

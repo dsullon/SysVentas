@@ -1,7 +1,7 @@
 app.controller('NuevaProformaCtrl', function($scope, $modal, $mdDialog, $state, ProformaFt, ClienteFt, LoteFt) {
     $scope.nuevo = {
         'numero': '<<Nuevo>>',
-        'descripcion1': '',
+        'descripcion': '',
         'descripcion2': '',
         'empleado': $scope.userLoggued.id
     }

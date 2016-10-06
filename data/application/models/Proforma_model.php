@@ -11,7 +11,7 @@ class Proforma_model extends CI_Model
     {
         if (!is_null($id)) {
             $query = $this->db
-            ->select("p.id, fechaProforma, numero, descripcion1, descripcion2, idEmpleado, idCliente, 
+            ->select("p.id, fechaProforma, numero, descripcion, descripcion2, idEmpleado, idCliente, 
                 idLote, p.precioM2, p.precioTotal, facturado, fechaVenta, idFactura, l.codigo, l.area,
                 CONCAT(c.apellidos,', ', c.nombres) AS cliente, e.usuario")
             ->from('tbl_proforma p')
@@ -25,7 +25,7 @@ class Proforma_model extends CI_Model
             return null;
         }
         $query = $this->db
-        ->select("p.id, fechaProforma, numero, descripcion1, descripcion2, idEmpleado, idCliente, 
+        ->select("p.id, fechaProforma, numero, descripcion, descripcion2, idEmpleado, idCliente, 
             idLote, p.precioM2, p.precioTotal, facturado, fechaVenta, idFactura, l.codigo, l.area,
             CONCAT(c.apellidos,', ', c.nombres) AS cliente, e.usuario")
         ->from('tbl_proforma p')
@@ -42,7 +42,7 @@ class Proforma_model extends CI_Model
     public function getNotBilling()
     {
         $query = $this->db
-        ->select("p.id, fechaProforma, numero, descripcion1, descripcion2, idEmpleado, idCliente, 
+        ->select("p.id, fechaProforma, numero, descripcion, descripcion2, idEmpleado, idCliente, 
             idLote, p.precioM2, p.precioTotal, facturado, fechaVenta, idFactura, l.codigo, l.area,
             CONCAT(c.apellidos,', ', c.nombres) AS cliente, e.usuario")
         ->from('tbl_proforma p')
@@ -74,7 +74,7 @@ class Proforma_model extends CI_Model
         }
 
         $this->db
-        ->set(array('numero' => $codigo, 'descripcion1' => $obj["descripcion1"], 'descripcion2' => $obj['descripcion2'], 
+        ->set(array('numero' => $codigo, 'descripcion' => $obj["descripcion"], 'descripcion2' => $obj['descripcion2'], 
             'idEmpleado' => $obj["empleado"], 'idCliente' => $obj["cliente"], 'idLote' => $obj["lote"], 
             'precioM2' => $obj['precioMt2'], 'precioTotal' => $obj["precio"]))
         ->insert('tbl_proforma');
