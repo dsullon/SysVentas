@@ -2,7 +2,6 @@ app.controller('NuevaProformaCtrl', function($scope, $modal, $mdDialog, $state, 
     $scope.nuevo = {
         'numero': '<<Nuevo>>',
         'descripcion': '',
-        'descripcion2': '',
         'empleado': $scope.userLoggued.id
     }
 

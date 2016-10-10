@@ -3,7 +3,7 @@ app.controller('FacturaCtrl', function($scope, $modal, $mdDialog, FacturaFt, Pro
   {
     $scope.facturas = data;
   });
-  ProformaFt.getAll().success(function(data)
+  ProformaFt.getNotBilling().success(function(data)
   {
     $scope.proformas = data;
   });

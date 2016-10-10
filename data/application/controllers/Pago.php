@@ -1,17 +1,17 @@
 <?php
 defined("BASEPATH" or die("El acceso al script no está permitido"));
 
-class Factura extends CI_Controller
+class Pago extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("factura_model");
+		$this->load->model("pago_model");
 	}
 
     public function getById($id)
     {
-        $data = $this->factura_model->get($id);
+        $data = $this->pago_model->get($id);
         if($data){
             header("HTTP/1.1 200 OK");
             echo json_encode($data );
@@ -20,10 +20,10 @@ class Factura extends CI_Controller
 
     public function getAll()
     {
-        $data = $this->factura_model->get();
+        $data = $this->pago_model->get();
         if($data){
             header("HTTP/1.1 200 OK");
-            echo json_encode($data );
+            echo json_encode($data);
         }
     }
 
@@ -31,7 +31,7 @@ class Factura extends CI_Controller
     {
         if($this->input->post("factura"))
         {
-            $addNew = $this->factura_model->create($this->input->post("factura"));
+            $addNew = $this->pago_model->create($this->input->post("factura"));
             if($addNew)
             { 
                 header("HTTP/1.1 200 OK");
@@ -54,7 +54,7 @@ class Factura extends CI_Controller
     {
         if($this->input->post('evaluation'))
         {
-            $delete = $this->factura_model->delete($this->input->post('evaluation'));		
+            $delete = $this->pago_model->delete($this->input->post('evaluation'));		
             if($delete)		
             {
                 header("HTTP/1.1 200 OK");
