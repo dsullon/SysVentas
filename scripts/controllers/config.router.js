@@ -220,66 +220,6 @@ angular.module('app')
         }
       }
     })
-    .state('app.pago', {
-    url: '/pago',
-    templateUrl: 'views/pago/lista.html',
-    data : { title: 'Listado de Pagos'},
-    resolve: {
-      auth : function(authFactory)
-      {
-          return authFactory.proccessNoAuth();
-      },
-      load: function($ocLazyLoad) {
-        return $ocLazyLoad.load({
-          name: "app",
-          files: [
-            'scripts/factories/pago.js',
-            'scripts/controllers/pago/lista.js'
-            ]
-          });
-        }
-      }
-    })
-    .state('app.crearPago', {
-      url: '/pago/nuevo/{id:[0-9]{1,4}}',
-      templateUrl: 'views/pago/crear.html',
-      data : { title: 'Nuevo pago'},
-      resolve: {
-        auth : function(authFactory)
-        {
-            return authFactory.proccessNoAuth();
-        },
-        load: function($ocLazyLoad) {
-          return $ocLazyLoad.load({
-            name: "app",
-            files: [
-              'scripts/factories/pago.js',
-              'scripts/controllers/pago/nuevo.js'
-              ]
-            });
-          }
-      }
-    })
-    .state('app.kardexPago', {
-      url: '/pago/kardex/{id:[0-9]{1,4}}',
-      templateUrl: 'views/pago/kardex.html',
-      data : { title: 'Detalles de pago'},
-      resolve: {
-        auth : function(authFactory)
-        {
-            return authFactory.proccessNoAuth();
-        },
-        load: function($ocLazyLoad) {
-          return $ocLazyLoad.load({
-            name: "app",
-            files: [
-              'scripts/factories/pago.js',
-              'scripts/controllers/pago/kardex.js'
-              ]
-            });
-          }
-      }
-    })
     .state('access', {
       url: '/access',
       template: '<div class="grey-900 bg-big"><div ui-view class="fade-in-down smooth"></div></div>'

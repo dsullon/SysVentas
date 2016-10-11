@@ -1,0 +1,106 @@
+<div class="row" ng-controller="KardexCtrl" ng-cloak>
+  <div class="row row-xs">
+    <form name="formValidate" class="form-horizontal form-validation">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-white">
+                <strong>Datos del pago</strong>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Nombres:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Nombres" 
+                        ng-model="pago.cliente" required disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Nro. Factura:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Número de factura" 
+                        ng-model="pago.factura" required disabled>
+                    </div>
+                    <label class="col-sm-2 control-label">Fec. Factura:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Fecha de factura" 
+                        ng-model="pago.fechaFactura" required disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Monto Factura:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control text-right" placeholder="Monto de la factura" 
+                        ng-model="pago.montoFactura" required disabled>
+                    </div>
+                    <label class="col-sm-2 control-label">Cuota inicial:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control text-right" placeholder="Cuota inicial" 
+                        ng-model="pago.cuotaInicial" required disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Total a pagar:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control text-right" placeholder="Total a pagar" 
+                        ng-model="pago.montoPagar" required disabled>
+                    </div>
+                    <label class="col-sm-2 control-label">Deuda actual:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control text-right" placeholder="Deuda actual" 
+                        ng-model="pendiente" required disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Cuota mensual:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control text-right" placeholder="Cuota mensual" 
+                        ng-model="pago.cuotaMensual" required disabled>
+                    </div>
+                    <label class="col-sm-2 control-label">Nro. Cuotas:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control text-right" placeholder="Número de cuotas" 
+                        ng-model="pago.numeroCuotas" required disabled>
+                    </div>
+                </div>
+                <table st-table="rowCollectionPage" st-safe-src="detalle" class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th st-sort="position">Fecha</th>
+                        <th st-sort="position">Cargo</th>
+                        <th st-sort="position">Abono</th>
+                        <th></th>
+                        </tr>
+                        <tr>
+                        <th colspan="3">
+                            <input st-search placeholder="Búsqueda global" class="input-sm form-control" type="search"/>
+                        </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in rowCollectionPage | filter: search">
+                            <td>{{ row.fecha | date : "dd-MM-yyyy" }}</td>
+                            <td>
+                                <span ng-if="row.tipo == '0'">{{row.monto}}</span>
+                                <span ng-if="row.tipo != '0'">-</span>
+                            </td>
+                            <td>
+                                <span ng-if="row.tipo == '1'">{{row.monto}}</span>
+                                <span ng-if="row.tipo != '1'">-</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        <td colspan="5" class="text-center">
+                            <div st-pagination="" st-items-by-page="20" st-displayed-pages="5" class="no-margin"></div>
+                        </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer text-right">
+                <button class="btn btn-info" ng-click="save()">Grabar</button>
+            </footer>
+        </div>
+    </form>
+  </div>
+</div>

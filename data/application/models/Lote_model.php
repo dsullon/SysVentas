@@ -31,17 +31,42 @@ class Lote_model extends CI_Model
 
     public function create($obj)
 	{
-        $this->db
-        ->set(array('apellidos' => $obj["apellidos"], 'nombres' => $obj["nombres"], 'idDocumento' => $obj['documento'], 
-            'direccion' => $obj["direccion"], 'telefono1' => $obj["telefono1"], 'telefono2' => $obj["telefono2"], 
-            'numeroDocumento' => $obj['numeroDocumento'], 'celular1' => $obj["celular1"], 'celular2' => $obj["celular2"], 
-            'email1' => $obj["email1"], 'email2' => $obj["email2"], 'idUbigeo' => $obj["ubigeo"], 'idZona' => $obj["zona"]))
-        ->insert('tbl_cliente');
-        log_message('ERROR',$this->db->last_query());
-        if ($this->db->affected_rows() === 1) {
-           return TRUE;
+        $this->db->trans_begin();
+
+        $query = $this->db
+        ->select('COALESCE(MAX(CAST(SUBSTRING(codigo, 3) AS UNSIGNED)),0) as numero')
+        ->from('tbl_lote')
+        ->get();
+        if($query){
+            $codigo = $query->row()->numero + 1;
+            $codigo = 'LT' . str_repeat("0", 4 - strlen($codigo)).$codigo;
         }else{
+            log_message('ERROR','No se pudo generar el correlativo.');
             return FALSE;
+        }
+
+        $this->db
+        ->set(array('codigo' => $codigo, 'medida1' => $obj["medida1"], 'medida2' => $obj['medida2'], 
+            'medida3' => $obj["medida3"], 'medida4' => $obj["medida4"], 'medida5' => $obj["medida5"],
+            'area' => $obj["area"], 'precioTotal' => $obj["precio"], 'precioM2' => $obj['precioM2'],
+            'registroPredial' => $obj["registroPredial"], 'registroMunicipal' => $obj["registroMunicipal"],
+            'memo' => $obj["observacion"]))
+        ->insert('tbl_lote');
+        $id = $this->db->insert_id();
+
+        if($obj['withImage'] === 'true'){
+            $this->db
+            ->set(array('urlPlano' => 'images/planos/'.$codigo.$obj["tipoImagen"]))
+            ->where(array('id' => $id))
+            ->update('tbl_lote');
+        }
+
+        if ($this->db->trans_status() === FALSE){
+            $this->db->trans_rollback();
+            return FALSE;
+        }else{
+            $this->db->trans_commit();
+            return $codigo;
         }
 	}
 }

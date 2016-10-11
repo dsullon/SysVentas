@@ -26,4 +26,50 @@ class Lote extends CI_Controller
             echo json_encode($data );
         }
     }
+
+    public function create()
+    {
+        if($this->input->post("lote"))
+        {
+            $addNew = $this->lote_model->create($this->input->post("lote"));
+            if($addNew)
+            { 
+                header("HTTP/1.1 200 OK");
+                echo json_encode(array("respuesta" => "success", 'data' => $addNew));
+            }
+            else
+            {   
+                header("HTTP/1.1 500 Internal Server Error");                
+                echo json_encode(array("respuesta" => "Error al procesar los datos."));
+            }
+        }
+        else
+        {
+            header("HTTP/1.1 400 Bad Request");
+            echo json_encode(array("respuesta" => "Faltan completar datos."));
+        }
+    }
+
+    public function update()
+    {
+        if($this->input->post("lote"))
+        {
+            $addNew = $this->lote_model->update($this->input->post("lote"));
+            if($addNew)
+            { 
+                header("HTTP/1.1 200 OK");
+                echo json_encode(array("respuesta" => "success"));
+            }
+            else
+            {   
+                header("HTTP/1.1 500 Internal Server Error");                
+                echo json_encode(array("respuesta" => "Error al procesar los datos."));
+            }
+        }
+        else
+        {
+            header("HTTP/1.1 400 Bad Request");
+            echo json_encode(array("respuesta" => "Faltan completar datos."));
+        }
+    }
 }

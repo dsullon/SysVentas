@@ -4,7 +4,7 @@ app.factory("FacturaFt", function($http, $location)
 		get : function(id)
 		{		
             return $http({
-                url: 'data/Factura/get' + '/'+ id,
+                url: 'data/Factura/getById' + '/'+ id,
                 method: 'GET'
             });
 		},

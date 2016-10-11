@@ -64,14 +64,13 @@ app.controller('NuevaFacturaCtrl', function($scope, $modal, $mdDialog, $state, $
         $scope.nuevo.igv = $scope.nuevo.subTotal * ($scope.nuevo.porcentajeIGV / 100);
         $scope.nuevo.total = (parseFloat($scope.nuevo.subTotal) + parseFloat($scope.nuevo.igv)).toFixed(2);
         $scope.nuevo.inicial = parseFloat(($scope.nuevo.total *  (10 / 100)).toFixed(2));
-        $scope.nuevo.montoPendiente = (parseFloat($scope.nuevo.total) - parseFloat($scope.nuevo.inicial)).toFixed(2);
     }
 
     $scope.calcularCuota = function(){
         var interes = $scope.nuevo.interesAnual / 12;
-        var montoMensual = $scope.nuevo.montoPendiente / $scope.nuevo.cuotas;
-        var montoInteres = montoMensual * (interes / 100);
-
-        $scope.nuevo.cuotaMensual = parseFloat((parseFloat(montoMensual) + parseFloat(montoInteres)).toFixed(2));
+        var pendiente = (parseFloat($scope.nuevo.total) - parseFloat($scope.nuevo.inicial)).toFixed(2);
+        $scope.nuevo.montoInteres = (pendiente * (interes / 100) * $scope.nuevo.cuotas).toFixed(2);
+        $scope.nuevo.montoPendiente = (parseFloat(pendiente) + parseFloat($scope.nuevo.montoInteres)).toFixed(2);
+        $scope.nuevo.cuotaMensual = ($scope.nuevo.montoPendiente / $scope.nuevo.cuotas).toFixed(2);
     }
 });

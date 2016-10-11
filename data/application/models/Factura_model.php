@@ -41,6 +41,8 @@ class Factura_model extends CI_Model
 	{
         $this->db->trans_begin();
 
+        $fecha = date("Y-m-d");
+
         $query = $this->db
         ->select('COALESCE(MAX(numero),0) as numero')
         ->from('tbl_factura')
@@ -54,10 +56,11 @@ class Factura_model extends CI_Model
         }
 
         $this->db
-        ->set(array('numero' => $codigo, 'precioM2' => $obj['precioMt2'], 'precioTotal' => $obj["total"],
-            'porIgv' => $obj['porcentajeIGV'], 'montoIgv' => $obj['igv'], 'porDcto' => $obj['porcentajeDCTO'],
-            'montoDcto' => $obj['descuento'], 'descripcion' => $obj["descripcion"], 'idEmpleado' => $obj["empleado"],
-            'idCliente' => $obj["cliente"], 'idLote' => $obj["lote"], 'idProforma' => $obj['proforma']))
+        ->set(array('numero' => $codigo, 'fechaFactura' => $fecha, 'precioM2' => $obj['precioMt2'],
+            'precioTotal' => $obj["total"], 'porIgv' => $obj['porcentajeIGV'], 'montoIgv' => $obj['igv'],
+            'porDcto' => $obj['porcentajeDCTO'], 'montoDcto' => $obj['descuento'], 'descripcion' => $obj["descripcion"],
+            'idEmpleado' => $obj["empleado"], 'idCliente' => $obj["cliente"], 'idLote' => $obj["lote"], 
+            'idProforma' => $obj['proforma']))
         ->insert('tbl_factura');
          $id = $this->db->insert_id();
 
@@ -74,14 +77,13 @@ class Factura_model extends CI_Model
         }
 
         $this->db
-        ->set(array('numero' => $codigo, 'montoFactura' => $obj['total'], 'cuotaInicial' => $obj['inicial'], 
+        ->set(array('numero' => $codigo, 'fecha' => $fecha, 'montoFactura' => $obj['total'], 'cuotaInicial' => $obj['inicial'], 
             'montoPagar' => $obj['montoPendiente'], 'numeroCuotas' => $obj['cuotas'],
             'interesAnual' => $obj['interesAnual'], 'cuotaMensual' => $obj['cuotaMensual'], 
             'idFactura' => $id))
         ->insert('tbl_pago');
         $idPago = $this->db->insert_id();
 
-        $fecha = date("Y-m-d");
         for($i = 0; $i < $obj['cuotas']; $i++){
             $this->db
             ->set(array('idPago' => $idPago, 'item' => ($i + 1), 'fecha' => $fecha, 
@@ -90,6 +92,13 @@ class Factura_model extends CI_Model
             $fecha = date('Y-m-d', strtotime($fecha. ' + 30 days'));
         }
 
+        $totalCuotas = $obj['cuotaMensual'] * $obj['cuotas'];
+        $diferencia = $obj['montoPendiente'] - $totalCuotas;
+
+        $this->db
+        ->set(array('monto' => $obj['cuotaMensual'] + $diferencia))
+        ->where(array('item' => $i, 'idPago' => $idPago))
+        ->update('tbl_detalle');
 
         $this->db
         ->set(array('facturado' => '1'))

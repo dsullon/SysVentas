@@ -4,14 +4,21 @@ app.factory("PagoFt", function($http, $location)
 		get : function(id)
 		{		
             return $http({
-                url: 'data/Pago/get' + '/'+ id,
+                url: 'data/Pago/getById/' + id,
                 method: 'GET'
             });
 		},
-        getAll : function(type)
+        getAll : function()
 		{		
             return $http({
                 url: 'data/Pago/getAll',
+                method: 'GET'
+            });
+		},
+        getDetail : function(id)
+		{		
+            return $http({
+                url: 'data/Pago/getDetail/' + id,
                 method: 'GET'
             });
 		},

@@ -29,5 +29,6 @@ angular
     'angular-loading-bar',
     'xeditable',
     'smart-table',
-    'textAngular'
+    'textAngular',
+    'angularFileUpload'
   ]);

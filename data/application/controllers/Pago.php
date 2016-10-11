@@ -27,11 +27,20 @@ class Pago extends CI_Controller
         }
     }
 
+    public function getDetail($id)
+    {
+        $data = $this->pago_model->getDetail($id);
+        if($data){
+            header("HTTP/1.1 200 OK");
+            echo json_encode($data );
+        }   
+    }
+
     public function create()
     {
-        if($this->input->post("factura"))
+        if($this->input->post("pago"))
         {
-            $addNew = $this->pago_model->create($this->input->post("factura"));
+            $addNew = $this->pago_model->create($this->input->post("pago"));
             if($addNew)
             { 
                 header("HTTP/1.1 200 OK");

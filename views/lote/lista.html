@@ -1,0 +1,35 @@
+<button class="btn btn-link" ui-sref="app.crearLote">
+  <span class="glyphicon glyphicon-plus"></span> Nuevo registro
+</button>
+<div class="row" ng-controller="LoteCtrl" ng-cloak>
+  <div class="row row-xs">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          LISTADO DE LOTES
+        </div>
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Área</th>
+              <th>Plano</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="lote in lotes">
+              <td>{{ lote.codigo }}</td>
+              <td>{{ lote.area }}</td>
+              <td><img style="width:20px" ng-src="{{ lote.urlPlano }}" on-error-src="images/no-image.png" /></td>
+              <td>
+                <div layout-gt-xs="row">
+                  <a ng-click="eliminarLote(eval.id)" title="Eliminar Lote" style="padding-right:10px;"><i class="fa fa-trash-o i-20"></i></a>
+                </dv>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

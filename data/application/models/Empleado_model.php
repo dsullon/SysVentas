@@ -15,7 +15,6 @@ class Empleado_model extends CI_Model
         ->join('tbl_perfil as p', 'e.idPerfil = p.id', 'INNER')
         ->where(array('e.usuario' => $obj['usuario'], 'e.clave' => $obj['password']))
         ->get();
-        log_message('ERROR', $this->db->last_query());
 		if (($query->num_rows() === 1)) {
             return $query->row_array();
         }

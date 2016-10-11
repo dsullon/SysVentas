@@ -29,7 +29,13 @@
             </tr>
         </tfoot>
     </table>
-    Lote seleccionado: <b>{{ selected.item.codigo }},  {{ selected.item.nombres }}</b>
+    Lote seleccionado: <b>{{ selected.item.codigo }}</b>
+    <div class="panel">
+        <div class="item">
+            <img ng-src="{{ selected.item.urlPlano }}" on-error-src="images/no-image.png" style="max-height: 150px;" alt="{{ selected.item.codigo }}">
+        </div>
+    </div>
+    <img style="width:20px" ng-src="{{ lote.urlPlano }}" on-error-src="images/no-image.png" />
 </div>
 <div class="modal-footer">                  
     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
